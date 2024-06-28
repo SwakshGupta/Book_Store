@@ -1,0 +1,27 @@
+..............................................ES modules basics .......................
+
+1. Named exports allow you to export multiple values from a module. When importing named exports, 
+you need to use curly braces {} to specify which export(s) you want to import.
+
+2. Default exports allow you to export a single value or entity from a module. You do not use curly braces when importing default exports.
+
+const greeting = 'Hello, World!';
+export default greeting;
+
+import greeting from './greeting.js';
+
+console.log(greeting); 
+
+3. we can also import like this 
+
+export const sayHello = (name) => `Hello, ${name}!`;
+export const sayGoodbye = (name) => `Goodbye, ${name}!`;
+
+const defaultMessage = 'Welcome!';
+export default defaultMessage;
+
+import defaultMessage, { sayHello, sayGoodbye } from './utils.js';
+
+console.log(defaultMessage);          // 'Welcome!'
+console.log(sayHello('Alice'));       // 'Hello, Alice!'
+console.log(sayGoodbye('Bob')); 
