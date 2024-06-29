@@ -1,6 +1,20 @@
 import AddBooks from "../../model/books.js"
 
 export const booksResolvers = {
+
+Query:
+{
+  getBooks:()=>
+  [
+    {
+      title:"rd sharma",price:94
+    }
+  ]
+
+},
+
+
+
   Mutation: {
     addBooks: async (_, { input }) => {
       const newAddBooks = new AddBooks(input);

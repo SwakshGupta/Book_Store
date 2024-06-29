@@ -20,6 +20,7 @@ import {gql} from  'apollo-server'
     books: [Book!]!
     notesIncluded: Boolean!
     name: String!
+    image:String
   }
   
   input AddBooksInput {
@@ -28,10 +29,13 @@ import {gql} from  'apollo-server'
     books: [BookInput!]!
     notesIncluded: Boolean!
     name: String!
+    image:String
+    
   }
   
   type Query {
    getBooksByName(name:String):[Book]!
+   getBooks:[Book]
   }
   
   type Mutation {

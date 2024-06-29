@@ -11,6 +11,7 @@ const bookSchema = new mongoose.Schema({
   branch: { type: String, required: true },
   books: { type: [bookSchema], required: true },
   notesIncluded: { type: Boolean, required: true },
+  image:{type:String,required:true}
 });
 
  const AddBooks = mongoose.model("AddBooks", addBooksSchema);
