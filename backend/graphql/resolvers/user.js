@@ -4,7 +4,9 @@
 
 import User from "../../model/user.js" // Adjust the path as per your file structure
 
-  export const resolver = {
+
+
+  export const userResolvers = {
   Query: {
     getUserById: async (_, { userId }) => {
       // this resolver should match with the query defined in the typedef

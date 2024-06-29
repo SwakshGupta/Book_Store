@@ -1,6 +1,7 @@
 import { ApolloServer } from "apollo-server-express";
-import  {typeDefs}  from "./graphql/schema/index.js";
-import  {resolver}  from "./graphql/resolvers/index.js";
+import { typeDefs } from './graphql/schema/index.js';
+
+import  {resolvers} from "./graphql/resolvers/index.js";
 
 import express from "express";
 
@@ -20,7 +21,8 @@ const server = new ApolloServer({
   // created a instance for the apollo server
 
  typeDefs,
-  resolver,
+
+  resolvers,
 });
 
 

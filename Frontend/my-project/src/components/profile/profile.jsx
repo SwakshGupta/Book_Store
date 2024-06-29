@@ -33,7 +33,7 @@ const CREATE_USER = gql`
 
 const FormikForm = () => {
   const [formData, setFormData] = useState({});
-  const [createUser] = useMutation(CREATE_USER);
+  const [createUser] = useMutation(CREATE_USER); // here we have created a create user  variabe=le using use mutation which will trigger the graphql mutation
 
   return (
     <div className="max-w-md mx-auto mt-10">
@@ -47,8 +47,8 @@ const FormikForm = () => {
           hostelOrRoom: '',
           branch: '',
         }}
-        onSubmit={(values, { setSubmitting }) => {
-          createUser({ variables: { input: values } })
+        onSubmit={(values, { setSubmitting }) => { // setSubmitting is a function provided by Formik to control the submitting state of the form. 
+          createUser({ variables: { input: values } }) // this set submitting tells us wwhen the form is submitting and when it has submitted 
             .then(response => {
               console.log('User created:', response.data.createUser);
               setFormData(response.data.createUser);
@@ -56,12 +56,14 @@ const FormikForm = () => {
             .catch(error => {
               console.error('Error creating user:', error);
             })
-            .finally(() => {
+            .finally(() => { // This method is called when the mutation operation is completed regardless it was sucessfull or not 
               setSubmitting(false);
+
+              // set submitting false means the form has finished submitting this will reset the submitting state 
             });
         }}
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting }) => ( // The isSubmitting property is a boolean provided by Formik that indicates whether the form is currently being submitted.
           <Form className="space-y-4">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
@@ -140,3 +142,19 @@ x
 };
 
 export default FormikForm;
+
+
+// This is the form which we have created using formik and yup 
+
+/*
+here we will discuss the purpose of isSubmitting property which is a boolean use for managing the state of the form
+
+
+Field components in formik are use to create inputs and an error message component
+
+1. in the submit button we have used the ternary operator which shows that if isSubmitting is true then text will be submitting and if it is
+
+false then  text will submit 
+
+
+*/
