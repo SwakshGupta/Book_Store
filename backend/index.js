@@ -3,16 +3,20 @@ import { typeDefs } from "./graphql/schema/index.js";
 
 import { resolvers } from "./graphql/resolvers/index.js";
 
+import connectDB from "./config/config.js";
+
 import express from "express";
 import cors from "cors";
 
 import dotenv from "dotenv";
 
-dotenv.config;
+dotenv.config();
 
 const app = express();
 
-const PORT = process.env.PORT || 8001;
+const PORT = process.env.PORT || 8005;
+
+connectDB();
 
 // middlewares
 
