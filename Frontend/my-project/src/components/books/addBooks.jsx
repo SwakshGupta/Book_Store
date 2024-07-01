@@ -11,7 +11,7 @@ const ADD_BOOKS = gql`
       year
       branch
       image
-      name
+     
       notesIncluded
       _id
       books {
@@ -37,7 +37,7 @@ const FormSchema = Yup.object().shape({
     })
   ),
   notesIncluded: Yup.boolean().required("Notes included is required"),
-  name: Yup.string().required("Name is required"),
+
   image: Yup.mixed().required("Image is required"),
 });
 
@@ -53,22 +53,28 @@ const AddBooks = () => {
           branch: "",
           books: [{ title: "", author: "", price: "" }],
           notesIncluded: false,
-          name: "",
+          
           image: null,
         }}
         validationSchema={FormSchema}
         onSubmit={(values, { setSubmitting }) => {
+          // setSubmitting is a function provided by Formik to handle the loading state of the form
+
+          // when setSubmitting is set to be false then form gets finished
+
+          console.log(values);
           const input = {
             ...values,
             image: values.image ? URL.createObjectURL(values.image) : "",
           };
           addBooks({ variables: { input } })
             .then((response) => {
-              console.log("Books added:", response.data.addBooks);
+              console.log("Books added:", response.data);
               setFormData(response.data.addBooks);
             })
             .catch((error) => {
               console.error("Error adding books:", error);
+              console.log("Error details:", error.message, error.graphQLErrors, error.networkError);
             })
             .finally(() => {
               setSubmitting(false);
@@ -87,7 +93,8 @@ const AddBooks = () => {
                 </label>
                 <Field
                   type="text"
-                  name="year"
+                  name="year" 
+                 
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
                 />
                 <ErrorMessage
@@ -231,24 +238,7 @@ const AddBooks = () => {
                 />
               </div>
 
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Name
-                </label>
-                <Field
-                  type="text"
-                  name="name"
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
-                />
-                <ErrorMessage
-                  name="name"
-                  component="div"
-                  className="text-red-600 text-sm"
-                />
-              </div>
+              
             </div>
 
             <div>
@@ -291,3 +281,79 @@ const AddBooks = () => {
 };
 
 export default AddBooks;
+
+/**  in formik the field component automatically handles state for us  
+ 
+ 1. when we  initialize formik with initial value it sets up  state for each field
+
+ 2. in the Field component we have name prop  say if name ="year" then  the formik automatically tells 
+    to use the value from initialValues.year
+
+ 3. FieldArray: This component from Formik is used to manage an array of fields
+
+ 4.   {({ insert, remove, push }) => (
+  <div className="space-y-4">
+    // JSX content here
+  </div>
+)}  
+
+this is the render prop function the field array component provide us methods to manipulate the array 
+
+5. {condition ? <ComponentIfTrue /> : <ComponentIfFalse />} then  we  are using conditional rendering 
+
+6. {values.books.length > 0 &&
+  values.books.map((book, index) => (
+    <div
+      key={index}
+      className="grid grid-cols-1 sm:grid-cols-3 gap-4"
+    >
+     if there is anything in the array then it starts mapping 
+
+
+7. <div className="flex justify-end mt-4">
+  <button
+    type="button"
+    className="bg-green-600 text-white py-2 px-4 rounded-md"
+    onClick={() =>
+      push({ title: "", author: "", price: "" })
+    }
+  >
+    Add Book
+  </button>
+</div>
+
+type button means it is not a submit button is a regular button 
+
+then when we click on the add book button then it pushes to create a new array for the book and then we are using map method 
+
+to map elemets 
+
+8. <button
+  type="submit"
+  disabled={isSubmitting}
+  className="w-full py-2 px-4 bg-blue-600 text-white rounded-md shadow-sm hover:bg-blue-700"
+>
+  {isSubmitting ? "Submitting..." : "Submit"}
+</button>
+
+this type submit means when the button is clicked then it will trigger on submit function 
+
+9. disabled={isSubmitting}:
+
+This prop disables the button while the form is being submitted (isSubmitting is true). 
+This prevents multiple submissions by disabling the button during the submission process.
+
+10. {isSubmitting ? "Submitting..." : "Submit"}  this will change the  button label if it is true then 
+
+it will return submitting otherwise it will return submit 
+
+
+
+
+
+
+
+
+
+
+ */

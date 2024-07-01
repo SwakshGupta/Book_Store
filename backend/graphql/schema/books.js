@@ -19,7 +19,7 @@ import {gql} from  'apollo-server'
     branch: String!
     books: [Book!]!
     notesIncluded: Boolean!
-    name: String!
+   
     image:String
   }
   
@@ -28,7 +28,7 @@ import {gql} from  'apollo-server'
     branch: String!
     books: [BookInput!]!
     notesIncluded: Boolean!
-    name: String!
+    
     image:String
     
   }
