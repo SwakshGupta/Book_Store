@@ -11,6 +11,10 @@
   },
   "dependencies": {
     "@apollo/client": "^3.10.8",
+    "@cloudinary/react": "^1.13.0",
+    "@cloudinary/url-gen": "^1.19.0",
+    "cloudinary": "^2.2.0",
+    "dotenv": "^16.4.5",
     "formik": "^2.4.6",
     "graphql": "^16.9.0",
     "react": "^18.3.1",

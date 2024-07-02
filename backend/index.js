@@ -21,6 +21,7 @@ connectDB();
 // middlewares
 
 app.use(cors());
+app.use(express.json({ limit: '50mb' }));  // to accept large json payload in the http header
 
 app.get("/", (req, res) => {
   res.send("hello from the server side");

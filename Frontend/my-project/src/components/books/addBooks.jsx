@@ -45,6 +45,28 @@ const AddBooks = () => {
   const [formData, setFormData] = useState({});
   const [addBooks] = useMutation(ADD_BOOKS);
 
+  const handleImageUpload = (event, setFieldValue) => {
+    const file = event.currentTarget.files[0];
+
+   // FileReader API: Used for reading file contents asynchronously in JavaScript.
+
+    const reader = new FileReader(); // creating a instance for the File Reader 
+
+    reader.onloadend = () => {
+      setFieldValue("image", reader.result); // this setField value is provided by formik  to update the form values 
+
+     // Since file reading is asynchronous, onloadend ensures that you wait for the file to be fully loaded before updating the form field
+
+      // reader.result contains the file's contents, represented as a data URL (data:image/jpeg;base64,...) if readAsDataURL was used.
+    };
+
+    if (file) {
+      reader.readAsDataURL(file); 
+    }
+  };
+// In JavaScript, the code snippet reader.readAsDataURL(file); is used with the FileReader API to asynchronously read the contents of a file specified by the file variable and convert it into a data URL format.
+
+
   return (
     <div className="max-w-3xl mx-auto mt-10">
       <Formik
@@ -65,7 +87,7 @@ const AddBooks = () => {
           console.log(values);
           const input = {
             ...values,
-            image: values.image ? URL.createObjectURL(values.image) : "",
+         
           };
           addBooks({ variables: { input } })
             .then((response) => {
@@ -250,12 +272,8 @@ const AddBooks = () => {
               </label>
               <input
                 type="file"
-                name="image"
-                accept="image/*"
+                onChange={(event) => handleImageUpload(event, setFieldValue)}
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
-                onChange={(event) => {
-                  setFieldValue("image", event.currentTarget.files[0]);
-                }}
               />
               <ErrorMessage
                 name="image"

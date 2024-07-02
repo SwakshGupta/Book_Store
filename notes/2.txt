@@ -7,4 +7,26 @@ the use of the internet for delivering a pool of hosted services for the custome
 
 3. Cloud computing is the delivery of computing services over the internet
 
-4. 
+
+.................................Things about Http request ..........................
+
+1. Http header -HTTP headers are key-value pairs included in the request or r
+
+the header usually contains the content type ,content length ,Autherization (contains  credentials for authentication)
+
+tokens are generally stored in the http headers 
+
+
+2. HTTP Body - The HTTP body contains the actual data being sent in the request or response. 
+This is where the payload, such as form data, JSON, XML, or other types of data, is stored. here our req.body is contained
+
+
+3. Query parameter - Query parameters are key-value pairs appended to the end of a URL to pass data to the server in an HTTP request
+
+
+....................................................................................
+
+1. 
+In JavaScript, FileReader is an API provided by modern web browsers that allows web applications to asynchronously read the contents of files stored on the user's computer 
+
+
