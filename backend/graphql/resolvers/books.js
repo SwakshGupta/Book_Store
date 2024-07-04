@@ -22,24 +22,26 @@ export const booksResolvers = {
 
         // Check if 'image' in the book is a Cloudinary URL or public ID
         if (book.image.includes("cloudinary")) {
-          // If 'image' is already a Cloudinary URL, return the book as is
+          // if the image url in the database is already a bookUrl then return the book 
           return book;
         } else {
-          // If 'image' is a public ID, fetch the image URL from Cloudinary
+         // If the image field is not a Cloudinary URL (assumed to be a public ID), 
+         //these lines use Cloudinary's API to fetch the image's secure URL
           const result = await cloudinary.api.resource(book.image);
           const imageUrl = result.secure_url;
 
-          // Update the book object with the fetched image URL
+          // book.toObject() converts the Mongoose document to a plain JavaScript object, 
+          // and the spread operator { ...book.toObject() } creates a new object with all the properties of the book
+          
           return { ...book.toObject(), image: imageUrl };
+
+
         }
       } catch (error) {
         console.error(error);
         throw new Error("Failed to fetch book with image");
       }
     },
-
-
-
 
 
 
