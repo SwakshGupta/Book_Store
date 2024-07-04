@@ -6,6 +6,16 @@ import {gql} from  'apollo-server'
     author: String
     price: Float
   }
+
+    type Books{
+    
+    year:String!
+    books:[Book!]!
+    price:Float
+    branch:String   
+    image:String
+   
+    }
   
   input BookInput {
     title: String!
@@ -34,12 +44,12 @@ import {gql} from  'apollo-server'
   }
   
   type Query {
-   getBooksByName(name:String):[Book]!
+   getBooksById(_id:String):Books!
    getBooks:[Book]
   }
   
   type Mutation {
-    addBooks(input: AddBooksInput!): AddBooks!
+    addBooks(input: AddBooksInput): AddBooks!
     deleteBooks(id:ID!):Boolean!
   }
   

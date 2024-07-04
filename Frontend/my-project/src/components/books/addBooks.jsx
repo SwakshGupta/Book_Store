@@ -11,7 +11,6 @@ const ADD_BOOKS = gql`
       year
       branch
       image
-     
       notesIncluded
       _id
       books {
@@ -37,7 +36,6 @@ const FormSchema = Yup.object().shape({
     })
   ),
   notesIncluded: Yup.boolean().required("Notes included is required"),
-
   image: Yup.mixed().required("Image is required"),
 });
 
@@ -47,25 +45,16 @@ const AddBooks = () => {
 
   const handleImageUpload = (event, setFieldValue) => {
     const file = event.currentTarget.files[0];
-
-   // FileReader API: Used for reading file contents asynchronously in JavaScript.
-
-    const reader = new FileReader(); // creating a instance for the File Reader 
+    const reader = new FileReader();
 
     reader.onloadend = () => {
-      setFieldValue("image", reader.result); // this setField value is provided by formik  to update the form values 
-
-     // Since file reading is asynchronous, onloadend ensures that you wait for the file to be fully loaded before updating the form field
-
-      // reader.result contains the file's contents, represented as a data URL (data:image/jpeg;base64,...) if readAsDataURL was used.
+      setFieldValue("image", reader.result);
     };
 
     if (file) {
-      reader.readAsDataURL(file); 
+      reader.readAsDataURL(file);
     }
   };
-// In JavaScript, the code snippet reader.readAsDataURL(file); is used with the FileReader API to asynchronously read the contents of a file specified by the file variable and convert it into a data URL format.
-
 
   return (
     <div className="max-w-3xl mx-auto mt-10">
@@ -75,31 +64,22 @@ const AddBooks = () => {
           branch: "",
           books: [{ title: "", author: "", price: "" }],
           notesIncluded: false,
-          
           image: null,
         }}
         validationSchema={FormSchema}
         onSubmit={(values, { setSubmitting }) => {
-          // setSubmitting is a function provided by Formik to handle the loading state of the form
-
-          // when setSubmitting is set to be false then form gets finished
-
-          console.log(values);
-          const input = {
-            ...values,
-         
-          };
+          console.log("Form Values:", values); // Debug log for form values
+          const input = { ...values };
+          console.log("Form Values again:", input); // Debug log for form values
           addBooks({ variables: { input } })
             .then((response) => {
-              console.log("Books added:", response.data);
+              console.log("Response:", response); // Debug log for response
               setFormData(response.data.addBooks);
+              setSubmitting(false);
             })
             .catch((error) => {
               console.error("Error adding books:", error);
-              console.log("Error details:", error.message, error.graphQLErrors, error.networkError);
-            })
-            .finally(() => {
-              setSubmitting(false);
+              setSubmitting(false); // Ensure setSubmitting is called on error
             });
         }}
       >
@@ -115,8 +95,7 @@ const AddBooks = () => {
                 </label>
                 <Field
                   type="text"
-                  name="year" 
-                 
+                  name="year"
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
                 />
                 <ErrorMessage
@@ -259,8 +238,6 @@ const AddBooks = () => {
                   className="text-red-600 text-sm"
                 />
               </div>
-
-              
             </div>
 
             <div>
@@ -299,6 +276,7 @@ const AddBooks = () => {
 };
 
 export default AddBooks;
+
 
 /**  in formik the field component automatically handles state for us  
  
