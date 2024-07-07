@@ -41,7 +41,7 @@ export const booksTypeDefs = gql`
   }
 
   type Query {
-    getBooksById(_id: String): Books!
+    getBooksById(_id: String): AddBooks!
     getAllBooks: [AddBooks!]!
   }
 

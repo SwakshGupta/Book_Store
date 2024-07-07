@@ -8,23 +8,20 @@ import Navbar from "./components/views/navBar";
 import AddBooks from "./components/books/addBooks";
 import Homepage from "./components/views/home";
 import GetAllBooks from "./components/views/books";
-
+import UserBook from "./components/views/userBook";
 
 function App() {
   return (
     <>
-<Router>
-  <Navbar/>
-  <div>
-
-    <Routes>
-
-      <Route path="/Addbooks" element={<AddBooks/>}/>
-      <Route path="/GetBooks" element={<GetAllBooks/>}/>
-     
-     
-      </Routes>
-      </div>
+      <Router>
+        <Navbar />
+        <div>
+          <Routes>
+            <Route path="/Addbooks" element={<AddBooks />} />
+            <Route path="/GetBooks" element={<GetAllBooks />} />
+            <Route path="/Userbook/:id" element={<UserBook />} />
+          </Routes>
+        </div>
       </Router>
     </>
   );
