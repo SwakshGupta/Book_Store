@@ -1,59 +1,52 @@
-import {gql} from  'apollo-server'
+import { gql } from "apollo-server";
 
- export const booksTypeDefs = gql`
- type Book {
+export const booksTypeDefs = gql`
+  type Book {
     title: String!
     author: String
     price: Float
   }
 
-    type Books{
-    
-    year:String!
-    books:[Book!]!
-    price:Float
-    branch:String   
-    image:String
-   
-    }
-  
+  type Books {
+    year: String!
+    books: [Book!]!
+    price: Float
+    branch: String
+    image: String
+  }
+
   input BookInput {
     title: String!
     author: String
     price: Float
   }
-  
+
   type AddBooks {
     _id: ID!
     year: String!
     branch: String!
     books: [Book!]!
     notesIncluded: Boolean!
-   
-    image:String
+
+    image: String
   }
-  
+
   input AddBooksInput {
     year: String!
     branch: String!
     books: [BookInput!]!
     notesIncluded: Boolean!
-    
-    image:String
-    
+
+    image: String
   }
-  
+
   type Query {
-   getBooksById(_id:String):Books!
-   getBooks:[Book]
+    getBooksById(_id: String): Books!
+    getAllBooks: [AddBooks!]!
   }
-  
+
   type Mutation {
     addBooks(input: AddBooksInput): AddBooks!
-    deleteBooks(id:ID!):Boolean!
+    deleteBooks(id: ID!): Boolean!
   }
-  
 `;
-
-
-
