@@ -8,11 +8,11 @@ Together, Formik and Yup make form validation in React a breeze.
 
  */
 
-import React, { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { useMutation, gql } from '@apollo/client';
-import 'tailwindcss/tailwind.css';
-import { FormSchema } from './yupSchema';
+import React, { useState } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useMutation, gql } from "@apollo/client";
+import "tailwindcss/tailwind.css";
+import { FormSchema } from "./yupSchema";
 
 // GraphQL mutation
 const CREATE_USER = gql`
@@ -29,9 +29,7 @@ const CREATE_USER = gql`
   }
 `;
 
-
-
-const FormikForm = () => {
+const ProfileForm = () => {
   const [formData, setFormData] = useState({});
   const [createUser] = useMutation(CREATE_USER); // here we have created a create user  variabe=le using use mutation which will trigger the graphql mutation
 
@@ -40,98 +38,151 @@ const FormikForm = () => {
       <Formik
         validationSchema={FormSchema}
         initialValues={{
-          name: '',
-          email: '',
-          image: '',
-          year: '',
-          hostelOrRoom: '',
-          branch: '',
+          name: "",
+          email: "",
+          image: "",
+          year: "",
+          hostelOrRoom: "",
+          branch: "",
         }}
-        onSubmit={(values, { setSubmitting }) => { // setSubmitting is a function provided by Formik to control the submitting state of the form. 
-          createUser({ variables: { input: values } }) // this set submitting tells us wwhen the form is submitting and when it has submitted 
-            .then(response => {
-              console.log('User created:', response.data.createUser);
+        onSubmit={(values, { setSubmitting }) => {
+          // setSubmitting is a function provided by Formik to control the submitting state of the form.
+          createUser({ variables: { input: values } }) // this set submitting tells us wwhen the form is submitting and when it has submitted
+            .then((response) => {
+              console.log("User created:", response.data.createUser);
               setFormData(response.data.createUser);
             })
-            .catch(error => {
-              console.error('Error creating user:', error);
+            .catch((error) => {
+              console.error("Error creating user:", error);
             })
-            .finally(() => { // This method is called when the mutation operation is completed regardless it was sucessfull or not 
+            .finally(() => {
+              // This method is called when the mutation operation is completed regardless it was sucessfull or not
               setSubmitting(false);
 
-              // set submitting false means the form has finished submitting this will reset the submitting state 
+              // set submitting false means the form has finished submitting this will reset the submitting state
             });
         }}
       >
-        {({ isSubmitting }) => ( // The isSubmitting property is a boolean provided by Formik that indicates whether the form is currently being submitted.
+        {(
+          { isSubmitting } // The isSubmitting property is a boolean provided by Formik that indicates whether the form is currently being submitted.
+        ) => (
           <Form className="space-y-4">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Name
+              </label>
               <Field
                 type="text"
                 name="name"
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
               />
-              <ErrorMessage name="name" component="div" className="text-red-600 text-sm" />
+              <ErrorMessage
+                name="name"
+                component="div"
+                className="text-red-600 text-sm"
+              />
             </div>
-
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Email
+              </label>
               <Field
                 type="email"
                 name="email"
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
               />
-              <ErrorMessage name="email" component="div" className="text-red-600 text-sm" />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className="text-red-600 text-sm"
+              />
             </div>
-
             <div>
-              <label htmlFor="image" className="block text-sm font-medium text-gray-700">Image URL</label>
+              <label
+                htmlFor="image"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Image URL
+              </label>
               <Field
                 type="text"
                 name="image"
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
               />
-              <ErrorMessage name="image" component="div" className="text-red-600 text-sm" />
+              <ErrorMessage
+                name="image"
+                component="div"
+                className="text-red-600 text-sm"
+              />
             </div>
-
             <div>
-              <label htmlFor="year" className="block text-sm font-medium text-gray-700">Year</label>
+              <label
+                htmlFor="year"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Year
+              </label>
               <Field
                 type="text"
                 name="year"
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
               />
-              <ErrorMessage name="year" component="div" className="text-red-600 text-sm" />
+              <ErrorMessage
+                name="year"
+                component="div"
+                className="text-red-600 text-sm"
+              />
             </div>
-
             <div>
-              <label htmlFor="hostelOrRoom" className="block text-sm font-medium text-gray-700">Hostel or Room Number</label>
+              <label
+                htmlFor="hostelOrRoom"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Hostel or Room Number
+              </label>
               <Field
                 type="text"
                 name="hostelOrRoom"
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
               />
-              <ErrorMessage name="hostelOrRoom" component="div" className="text-red-600 text-sm" />
+              <ErrorMessage
+                name="hostelOrRoom"
+                component="div"
+                className="text-red-600 text-sm"
+              />
             </div>
-x
+            x
             <div>
-              <label htmlFor="branch" className="block text-sm font-medium text-gray-700">Branch</label>
+              <label
+                htmlFor="branch"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Branch
+              </label>
               <Field
                 type="text"
                 name="branch"
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
               />
-              <ErrorMessage name="branch" component="div" className="text-red-600 text-sm" />
+              <ErrorMessage
+                name="branch"
+                component="div"
+                className="text-red-600 text-sm"
+              />
             </div>
-
             <div>
               <button
                 type="submit"
                 disabled={isSubmitting}
                 className="w-full py-2 px-4 bg-blue-600 text-white rounded-md shadow-sm hover:bg-blue-700"
               >
-                {isSubmitting ? 'Submitting...' : 'Submit'}
+                {isSubmitting ? "Submitting..." : "Submit"}
               </button>
             </div>
           </Form>
@@ -141,10 +192,9 @@ x
   );
 };
 
-export default FormikForm;
+export default ProfileForm;
 
-
-// This is the form which we have created using formik and yup 
+// This is the form which we have created using formik and yup
 
 /*
 here we will discuss the purpose of isSubmitting property which is a boolean use for managing the state of the form

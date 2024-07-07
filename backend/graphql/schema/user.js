@@ -4,9 +4,8 @@ import { gql } from 'apollo-server';
 
  export const userTypeDefs = gql`
   type User {
-    _id: ID!
+   
     username: String!
-    email: String!
     image: String
     year: Int!
     hostelOrRoomNo: String!
@@ -15,11 +14,11 @@ import { gql } from 'apollo-server';
 
   input CreateUserInput {
     username: String!
-    email: String!
     image: String
     year: Int!
     hostelOrRoomNo: String!
     branch: String!
+
   }
 
   type Query {

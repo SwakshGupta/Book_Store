@@ -9,20 +9,24 @@ import AddBooks from "./components/books/addBooks";
 import Homepage from "./components/views/home";
 import GetAllBooks from "./components/views/books";
 import UserBook from "./components/views/userBook";
+import UserProfile from "./components/profile/profile";
 
 function App() {
   return (
     <>
-      <Router>
-        <Navbar />
-        <div>
-          <Routes>
-            <Route path="/Addbooks" element={<AddBooks />} />
-            <Route path="/GetBooks" element={<GetAllBooks />} />
-            <Route path="/Userbook/:id" element={<UserBook />} />
-          </Routes>
-        </div>
-      </Router>
+      <div className="h-full">
+        <Router>
+          <Navbar />
+          <div className="h-screen  overflow-y-auto">
+            <Routes>
+              <Route path="/Addbooks" element={<AddBooks />} />
+              <Route path="/Profile" element={<UserProfile />} />
+              <Route path="/GetBooks" element={<GetAllBooks />} />
+              <Route path="/Userbook/:id" element={<UserBook />} />
+            </Routes>
+          </div>
+        </Router>
+      </div>
     </>
   );
 }
