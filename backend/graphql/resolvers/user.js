@@ -2,68 +2,40 @@
 
 // and yeah the resolver which you have created should match with the typedefs you have  created
 
-import User from "../../model/user.js" // Adjust the path as per your file structure
+import User from "../../model/user.js"; // Adjust the path as per your file structure
 
-
-
-  export const userResolvers = {
+export const userResolvers = {
   Query: {
     getUserById: async (_, { userId }) => {
-      // this resolver should match with the query defined in the typedef
       try {
         const user = await User.findById(userId);
-        return user; // whatever returned by the resolver it will return to the client
+
+        if (!user) {
+          throw new error("User not found in the database");
+        }
+
+        return user;
       } catch (err) {
-        throw new Error(
-          `Failed to fetch user with ID ${userId}: ${err.message}`
-        );
-      }
-    },
-    getAllUsers: async () => {
-      try {
-        const users = await User.find();
-        return users;
-      } catch (err) {
-        throw new Error(`Failed to fetch all users: ${err.message}`);
+        console.error(err);
       }
     },
   },
-  Mutation: {
-    createUser: async (_, { input }) => {
-      // here _ represnts the parent object
-      try {
-        const newUser = await User.create(input);
-        return newUser;
-      } catch (err) {
-        throw new Error(`Failed to create user: ${err.message}`);
-      }
-    },
-    updateUser: async (_, { userId, input }) => {
-      try {
-        const updatedUser = await User.findByIdAndUpdate(userId, input, {
-          new: true,
-        });
-        return updatedUser;
-      } catch (err) {
-        throw new Error(
-          `Failed to update user with ID ${userId}: ${err.message}`
-        );
-      }
-    },
-    deleteUser: async (_, { userId }) => {
-      try {
-        const deletedUser = await User.findByIdAndDelete(userId);
-        return deletedUser;
-      } catch (err) {
-        throw new Error(
-          `Failed to delete user with ID ${userId}: ${err.message}`
-        );
-      }
-    },
-  },
+
+Mutation:{
+
+
+
+
+
+
+
+
+}
+
+
+
+
 };
-
-
 
 /*
 in resolver function we  basically have four parameters 
@@ -76,3 +48,120 @@ First filed is kept _ means empty becuase we dont have any parent field which is
 
 
 */
+
+
+// import bcrypt from 'bcryptjs';
+// import jwt from 'jsonwebtoken';
+// import User from './models/User';
+
+// const resolvers = {
+//   Query: {
+//     getUserById: async (_, { userId }) => {
+//       try {
+//         const user = await User.findById(userId);
+//         if (!user) {
+//           throw new Error('User not found');
+//         }
+//         return user;
+//       } catch (error) {
+//         throw new Error(error.message);
+//       }
+//     },
+//   },
+//   Mutation: {
+//     signup: async (_, { input }) => {
+//       const { username, email, password, image, year, hostelOrRoomNo, branch } = input;
+//       try {
+//         // Check if the user already exists
+//         const existingUser = await User.findOne({ email });
+//         if (existingUser) {
+//           throw new Error('User already exists');
+//         }
+
+//         // Hash the password
+//         const hashedPassword = await bcrypt.hash(password, 12);
+
+//         // Create a new user
+//         const newUser = new User({
+//           username,
+//           email,
+//           password: hashedPassword,
+//           image,
+//           year,
+//           hostelOrRoomNo,
+//           branch,
+//         });
+
+//         const savedUser = await newUser.save();
+
+//         // Generate JWT token
+//         const token = jwt.sign(
+//           { userId: savedUser.id },
+//           'your_secret_key', // Replace with your secret key
+//           { expiresIn: '1h' }
+//         );
+
+//         return {
+//           token,
+//           user: savedUser,
+//         };
+//       } catch (error) {
+//         throw new Error(error.message);
+//       }
+//     },
+//     login: async (_, { input }) => {
+//       const { email, password } = input;
+//       try {
+//         // Find the user by email
+//         const user = await User.findOne({ email });
+//         if (!user) {
+//           throw new Error('User not found');
+//         }
+
+//         // Check if the password is correct
+//         const isMatch = await bcrypt.compare(password, user.password);
+//         if (!isMatch) {
+//           throw new Error('Invalid credentials');
+//         }
+
+//         // Generate JWT token
+//         const token = jwt.sign(
+//           { userId: user.id },
+//           'your_secret_key', // Replace with your secret key
+//           { expiresIn: '1h' }
+//         );
+
+//         return {
+//           token,
+//           user,
+//         };
+//       } catch (error) {
+//         throw new Error(error.message);
+//       }
+//     },
+//     updateUser: async (_, { userId, input }) => {
+//       try {
+//         const user = await User.findByIdAndUpdate(userId, input, { new: true });
+//         if (!user) {
+//           throw new Error('User not found');
+//         }
+//         return user;
+//       } catch (error) {
+//         throw new Error(error.message);
+//       }
+//     },
+//     deleteUser: async (_, { userId }) => {
+//       try {
+//         const user = await User.findByIdAndDelete(userId);
+//         if (!user) {
+//           throw new Error('User not found');
+//         }
+//         return user;
+//       } catch (error) {
+//         throw new Error(error.message);
+//       }
+//     },
+//   },
+// };
+
+// export default resolvers;

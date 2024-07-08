@@ -1,39 +1,52 @@
-// since graph ql is a query language so we have to define a schema for that
-
 import { gql } from 'apollo-server';
 
- export const userTypeDefs = gql`
+export const userTypeDefs = gql`
   type User {
-   
+    _id: ID!
     username: String!
+    email: String!
     image: String
     year: Int!
     hostelOrRoomNo: String!
     branch: String!
   }
 
-  input CreateUserInput {
+  type AuthPayload {
+    token: String!
+    user: User!
+  }
+
+  input SignupInput {
     username: String!
+    email: String!
+    password: String!
     image: String
     year: Int!
     hostelOrRoomNo: String!
     branch: String!
+  }
 
+  input LoginInput {
+    email: String!
+    password: String!
+  }
+
+  input UpdateUserInput {
+    username: String
+    image: String
+    year: Int
+    hostelOrRoomNo: String
+    branch: String
   }
 
   type Query {
     getUserById(userId: ID!): User
-    getAllUsers: [User]
   }
 
   type Mutation {
-    createUser(input: CreateUserInput!): User
-    updateUser(userId: ID!, input: CreateUserInput!): User
+    signup(input: SignupInput!): AuthPayload!
+    login(input: LoginInput!): AuthPayload!
+    updateUser(userId: ID!, input: UpdateUserInput!): User
     deleteUser(userId: ID!): User
   }
 `;
-
-
-
-
-// this gql tag converts our graph ql string into the graphql string which can be read by the apollo server
