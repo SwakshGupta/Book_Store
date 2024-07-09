@@ -10,6 +10,7 @@ import Homepage from "./components/views/home";
 import GetAllBooks from "./components/views/books";
 import UserBook from "./components/views/userBook";
 import UserProfile from "./components/profile/profile";
+import SignupForm from "./components/views/auth/signUp";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
               <Route path="/Profile" element={<UserProfile />} />
               <Route path="/GetBooks" element={<GetAllBooks />} />
               <Route path="/Userbook/:id" element={<UserBook />} />
+              <Route path="/SignUp" element={<SignupForm/>}/>
             </Routes>
           </div>
         </Router>
