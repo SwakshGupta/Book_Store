@@ -3,12 +3,13 @@ import { gql } from 'apollo-server';
 export const userTypeDefs = gql`
   type User {
     _id: ID!
-    username: String!
+    username: String
     email: String!
-    image: String
+    
     year: Int!
     hostelOrRoomNo: String!
     branch: String!
+    phone:Int
   }
 
   type AuthPayload {
@@ -17,13 +18,13 @@ export const userTypeDefs = gql`
   }
 
   input SignupInput {
-    username: String!
+    username: String
     email: String!
     password: String!
-    image: String
     year: Int!
     hostelOrRoomNo: String!
     branch: String!
+    phone:String
   }
 
   input LoginInput {
@@ -33,7 +34,7 @@ export const userTypeDefs = gql`
 
   input UpdateUserInput {
     username: String
-    image: String
+    phone:String
     year: Int
     hostelOrRoomNo: String
     branch: String
@@ -44,7 +45,7 @@ export const userTypeDefs = gql`
   }
 
   type Mutation {
-    signup(input: SignupInput!): AuthPayload!
+    signup(input: SignupInput): AuthPayload!
     login(input: LoginInput!): AuthPayload!
     updateUser(userId: ID!, input: UpdateUserInput!): User
     deleteUser(userId: ID!): User

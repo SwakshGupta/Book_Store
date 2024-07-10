@@ -1,0 +1,32 @@
+....................Here i am going to write about Promises async/await................
+
+1. A Promise is a JavaScript object used for managing asynchronous operations.
+
+2. . We can use them to convert asynchronous tasks into synchronous ones.
+
+3. Promises enable the handling of data that is not currently available but will be available in the future.
+
+4. Promises transition from the “Pending” state to either “Fulfilled” or “Rejected” once the asynchronous operation is completed. These states help manage the flow of asynchronous code and handle its outcomes
+
+5. .then() method is use to handle the promise 
+
+
+  ................
+
+6. async function indicate that the result of the function is Promise and await wait for the promise to be resolve when the function is completed
+
+7. for eg-
+
+  async function ()=>
+  {
+    await User.getelementbyid(id)
+  }
+
+  here get element by id is a async function which will return us a promise so our javascript will wait till this function is executed
+
+
+
+8. when we fetch any data from the database we use async await method which means fetching data is a asynchronous operation which will return 
+
+us a promise promise will later be fullfilled or rejected if fullfilled then we can get the get the data using .then method 
+

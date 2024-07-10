@@ -4,9 +4,9 @@
 
 import User from "../../model/user.js"; // Adjust the path as per your file structure
 
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 
 dotenv.config(); //The dotenv.config() function is used to load environment variables from a .env file into process.env.
 
@@ -27,37 +27,44 @@ export const userResolvers = {
     },
   },
 
-Mutation:{
+  Mutation: {
     signup: async (_, { input }) => {
-      const { username, email, password, image, year, hostelOrRoomNo, branch } = input;
+      const {
+        username,
+        email,
+        password,
+        year,
+        hostelOrRoomNo,
+        branch,
+        phone,
+      } = input;
+
+      console.log("the function is working ");
+      console.log( process.env.your_secret_key)
+
       try {
         // Check if the user already exists
         const existingUser = await User.findOne({ email });
         if (existingUser) {
-          throw new Error('User already exists');
+          throw new Error("User already exists");
         }
 
-        // Hash the password
-        const hashedPassword = await bcrypt.hash(password, 12);
-
-        // Create a new user
         const newUser = new User({
           username,
           email,
-          password: hashedPassword,
-          image,
+          password,
           year,
           hostelOrRoomNo,
           branch,
+          phone,
         });
 
         const savedUser = await newUser.save();
 
-        // Generate JWT token
         const token = jwt.sign(
           { userId: savedUser.id },
-          'your_secret_key', // Replace with your secret key
-          { expiresIn: '1h' }
+          process.env.your_secret_key,
+          { expiresIn: "1h" }
         );
 
         return {
@@ -69,13 +76,13 @@ Mutation:{
       }
     },
 
-        login: async (_, { input }) => {
+    login: async (_, { input }) => {
       const { email, password } = input;
       try {
         // Find the user by email
         const user = await User.findOne({ email });
         if (!user) {
-          throw new Error('User not found');
+          throw new Error("User not found");
         }
 
         // Check if the password is correct
@@ -84,17 +91,15 @@ Mutation:{
         //   throw new Error('Invalid credentials');
         // }
 
-          if(password!=user.password)
-            {
-              throw new Error("Invalid credentials")
-            }
-
+        if (password != user.password) {
+          throw new Error("Invalid credentials");
+        }
 
         // Generate JWT token
         const token = jwt.sign(
           { userId: user.id },
-          process.env.your_secret_key, // a token will be generated when the user logsin 
-          { expiresIn: '1h' }
+          process.env.your_secret_key, // a token will be generated when the user logsin
+          { expiresIn: "1h" }
         );
 
         return {
@@ -106,11 +111,11 @@ Mutation:{
       }
     },
 
-        updateUser: async (_, { userId, input }) => {
+    updateUser: async (_, { userId, input }) => {
       try {
         const user = await User.findByIdAndUpdate(userId, input, { new: true });
         if (!user) {
-          throw new Error('User not found');
+          throw new Error("User not found");
         }
         return user;
       } catch (error) {
@@ -118,11 +123,11 @@ Mutation:{
       }
     },
 
-        deleteUser: async (_, { userId }) => {
+    deleteUser: async (_, { userId }) => {
       try {
         const user = await User.findByIdAndDelete(userId);
         if (!user) {
-          throw new Error('User not found');
+          throw new Error("User not found");
         }
         return user;
       } catch (error) {
@@ -131,14 +136,6 @@ Mutation:{
     },
   },
 };
-
-
-
-
-
-
-
-
 
 /*
 in resolver function we  basically have four parameters 
@@ -151,7 +148,6 @@ First filed is kept _ means empty becuase we dont have any parent field which is
 
 
 */
-
 
 // import bcrypt from 'bcryptjs';
 // import jwt from 'jsonwebtoken';

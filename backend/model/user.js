@@ -16,10 +16,6 @@ const userSchema = new Schema({
     required: true,
   },
 
-  image: {
-    type: String,
-    default: "default.jpg",
-  },
   year: {
     type: Number,
     required: true,
@@ -31,6 +27,11 @@ const userSchema = new Schema({
   branch: {
     type: String,
     required: true,
+  },
+
+  phone: {
+    type: String,
+    required: false,
   },
 });
 
