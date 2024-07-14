@@ -1,5 +1,8 @@
-import AddBooks from "../../model/books.js";
-
+import Books from "../../model/books.js";
+import {
+  addBookToUser,
+  getUserWithBooks,
+} from "../../controllers/bookService.js";
 import cloudinary from "../../config/cloudinary.js";
 
 export const booksResolvers = {
@@ -8,17 +11,16 @@ export const booksResolvers = {
       console.log("Fetching all books...");
 
       try {
-        const books = await AddBooks.find();
+        const books = await Books.find();
 
-        // Validate and update the image URLs if needed
         const updatedBooks = await Promise.all(
           books.map(async (book) => {
             if (book.image && !book.image.includes("cloudinary")) {
-              const result = await cloudinary.api.resource(book.image);
+              const result = await cloudinary.api.resource(book.image); //  if the image added  is not in the cloudinary format then generate the url of image and save the image in cloud
               book.image = result.secure_url;
               await book.save(); // Save the updated book document
             }
-            return book;
+            return book; // after uploading  image in the cloud return the book
           })
         );
 
@@ -27,7 +29,7 @@ export const booksResolvers = {
           _id: book._id,
           year: book.year,
           branch: book.branch,
-          books: book.books, // Assuming book.books is already in the correct format [Book!]!
+          books: book.books,
           notesIncluded: book.notesIncluded,
           image: book.image,
         }));
@@ -39,8 +41,7 @@ export const booksResolvers = {
 
     getBooksById: async (_, { _id }) => {
       try {
-        // Fetch the book from the database by _id
-        const book = await AddBooks.findById(_id);
+        const book = await Books.findById(_id);
 
         if (!book) {
           throw new Error("Book not found");
@@ -51,7 +52,7 @@ export const booksResolvers = {
           // if the image url in the database is already a bookUrl then return the book
           return book;
         } else {
-          // If the image field is not a Cloudinary URL (assumed to be a public ID),
+          // If the image field is not a Cloudinary URL
           //these lines use Cloudinary's API to fetch the image's secure URL
           const result = await cloudinary.api.resource(book.image);
           const imageUrl = result.secure_url;
@@ -66,6 +67,16 @@ export const booksResolvers = {
         throw new Error("Failed to fetch book with image");
       }
     },
+
+    getUserWithBooks: async (_, { userId }) => {
+      try {
+        const user = await getUserWithBooks(userId);
+        return user;
+      } catch (error) {
+        console.error(error);
+        throw new Error("Failed to fetch user with books");
+      }
+    },
   },
 
   Mutation: {
@@ -78,7 +89,7 @@ export const booksResolvers = {
         const result = await cloudinary.uploader.upload(input.image, {
           // here we are uploading the image using the clodinary api
 
-          folder: "book_image",
+          folder: "books_images",
 
           transformation: [
             { width: 250, height: 250, crop: "limit" }, // Specify desired dimensions here
@@ -89,17 +100,24 @@ export const booksResolvers = {
         console.log(bookUrl);
       }
 
-      const newAddBooks = new AddBooks({
+      const newBooks = new Books({ // creating data inside teh book model 
         ...input,
         image: bookUrl, // This will replace our base64 string with the cloudinary url
+       
       });
-      await newAddBooks.save();
-      return newAddBooks;
+      await newBooks.save();
+
+      
+      if (input.userId) {
+        await addBookToUser(input.userId, newBooks); 
+      }
+
+      return newBooks;
     },
 
     deleteBooks: async (_, { id }) => {
       try {
-        const result = await AddBooks.findByIdAndDelete(id);
+        const result = await Books.findByIdAndDelete(id);
 
         return id == !null;
       } catch (err) {

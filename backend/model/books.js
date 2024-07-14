@@ -11,9 +11,11 @@ const bookSchema = new mongoose.Schema({
   branch: { type: String, required: true },
   books: { type: [bookSchema], required: true },
   notesIncluded: { type: Boolean, required: true },
-  image:{type:String,required:true}
+  image:{type:String,required:true},
+  owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' } // because we are doing mapping with the user so we have to have userId in the book schema
+   
 });
 
- const AddBooks = mongoose.model("AddBooks", addBooksSchema);
+ const Books = mongoose.model("AddBooks", addBooksSchema);
 
- export default AddBooks;
+ export default Books;

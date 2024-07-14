@@ -30,11 +30,14 @@ const userSchema = new Schema({
   },
 
   phone: {
-    type: String,
+    type: Number,
     required: false,
   },
+  books: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Books' }] // since i am doing mapping with the books so we should have booksId inside the userId 
 });
 
-const User = mongoose.model("User", userSchema);
+ const User = mongoose.model("User", userSchema);
 
-export default User;
+ export default User
+
+

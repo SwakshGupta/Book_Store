@@ -30,7 +30,9 @@ const GetAllBooks = () => {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6 mt-10">
+      {" "}
+      {/* Adjust margin */}
       {data.getAllBooks.map((book) => (
         <Link key={book._id} to={`/Userbook/${book._id}`} className="book-link">
           <div className="bg-white shadow-md rounded-lg overflow-hidden">
@@ -48,6 +50,11 @@ const GetAllBooks = () => {
           </div>
         </Link>
       ))}
+      <Link to="/Addbooks" className="fixed bottom-4 right-4">
+        <button className="bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+          <span className="text-2xl">+</span>
+        </button>
+      </Link>
     </div>
   );
 };

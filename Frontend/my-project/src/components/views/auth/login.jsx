@@ -6,7 +6,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from '@apollo/client';
 import { gql } from "@apollo/client";
-import { useNavigate } from 'react-router-dom'; // Step 1: Import useNavigate
+import { useNavigate, Link } from 'react-router-dom'; 
 
 const LOGIN_USER = gql`
   mutation Login($input: LoginInput!) {
@@ -32,7 +32,7 @@ const LoginSchema = Yup.object().shape({
 });
 
 const LoginForm = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   // Apollo Client useMutation hook to execute the login mutation
   const [loginUser, { loading, error }] = useMutation(LOGIN_USER);
@@ -57,8 +57,8 @@ const LoginForm = () => {
             },
           }).then(({ data }) => {
             console.log('Login successful!', data);
-            localStorage.setItem('token', data.login.token); // here we are storing the token in the local storage 
-            navigate('/GetBooks'); 
+            localStorage.setItem('token', data.login.token); // Store the token in local storage
+            navigate('/GetBooks');
           }).catch((error) => {
             console.error('Error logging in:', error);
             // Handle login error (e.g., display error message)
@@ -105,6 +105,11 @@ const LoginForm = () => {
           </Form>
         )}
       </Formik>
+      <div className="mt-4 text-center">
+        <p className="text-sm text-gray-600">
+          Don't have an account? <Link to="/signup" className="text-blue-500 hover:underline">Sign up</Link>
+        </p>
+      </div>
     </div>
   );
 };

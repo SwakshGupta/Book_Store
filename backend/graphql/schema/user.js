@@ -5,7 +5,6 @@ export const userTypeDefs = gql`
     _id: ID!
     username: String
     email: String!
-    
     year: Int!
     hostelOrRoomNo: String!
     branch: String!
@@ -24,7 +23,7 @@ export const userTypeDefs = gql`
     year: Int!
     hostelOrRoomNo: String!
     branch: String!
-    phone:String
+    phone:Int
   }
 
   input LoginInput {
@@ -33,11 +32,12 @@ export const userTypeDefs = gql`
   }
 
   input UpdateUserInput {
-    username: String
-    phone:String
-    year: Int
-    hostelOrRoomNo: String
-    branch: String
+    username: String!
+    email:String!
+    phone:Int
+    year: Int!
+    hostelOrRoomNo: String!
+    branch: String!
   }
 
   type Query {

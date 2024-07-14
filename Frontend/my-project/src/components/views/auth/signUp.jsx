@@ -7,6 +7,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { gql } from "@apollo/client";
 import { useMutation } from "@apollo/client";
+import { useNavigate, Link } from 'react-router-dom'; 
 
 const SIGN_UP = gql`
   mutation Mutation($input: SignupInput!) {
@@ -238,6 +239,11 @@ const SignupForm = () => {
           </Form>
         )}
       </Formik>
+      <div className="mt-4 text-center">
+        <p className="text-sm text-gray-600">
+         Already have an account? <Link to="/Login" className="text-blue-500 hover:underline">LogIn</Link>
+        </p>
+      </div>
     </div>
   );
 };
