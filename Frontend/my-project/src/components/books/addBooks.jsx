@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
 import { useMutation, gql } from "@apollo/client";
 import * as Yup from "yup";
@@ -39,9 +39,34 @@ const FormSchema = Yup.object().shape({
   image: Yup.mixed().required("Image is required"),
 });
 
+const decodeToken = (token) => {
+  if (!token) return null;
+  const base64Url = token.split(".")[1];
+  const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  const jsonPayload = decodeURIComponent(
+    atob(base64)
+      .split("")
+      .map((c) => {
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join("")
+  );
+
+  return JSON.parse(jsonPayload).userId;  // here we are decoding the token to get the userId from the token 
+};
+
 const AddBooks = () => {
   const [formData, setFormData] = useState({});
   const [addBooks] = useMutation(ADD_BOOKS);
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedUserId = decodeToken(token);
+      setUserId(decodedUserId);
+    }
+  }, []);
 
   const handleImageUpload = (event, setFieldValue) => {
     const file = event.currentTarget.files[0];
@@ -69,8 +94,8 @@ const AddBooks = () => {
         validationSchema={FormSchema}
         onSubmit={(values, { setSubmitting }) => {
           console.log("Form Values:", values); // Debug log for form values
-          const input = { ...values };
-          console.log("Form Values again:", input); // Debug log for form values
+          const input = { ...values, userId }; // Include userId in the input
+          console.log("Form Values with userId:", input); // Debug log for form values with userId
           addBooks({ variables: { input } })
             .then((response) => {
               console.log("Response:", response); // Debug log for response
@@ -276,6 +301,7 @@ const AddBooks = () => {
 };
 
 export default AddBooks;
+
 
 /**  in formik the field component automatically handles state for us  
  

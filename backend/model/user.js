@@ -17,7 +17,7 @@ const userSchema = new Schema({
   },
 
   year: {
-    type: Number,
+    type: String,
     required: true,
   },
   hostelOrRoomNo: {
@@ -30,7 +30,7 @@ const userSchema = new Schema({
   },
 
   phone: {
-    type: Number,
+    type:String,
     required: false,
   },
   books: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Books' }] // since i am doing mapping with the books so we should have booksId inside the userId 

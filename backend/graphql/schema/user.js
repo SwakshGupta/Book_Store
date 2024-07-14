@@ -5,10 +5,10 @@ export const userTypeDefs = gql`
     _id: ID!
     username: String
     email: String!
-    year: Int!
+    year: String!
     hostelOrRoomNo: String!
     branch: String!
-    phone:Int
+    phone:String
   }
 
   type AuthPayload {
@@ -20,10 +20,10 @@ export const userTypeDefs = gql`
     username: String
     email: String!
     password: String!
-    year: Int!
+    year: String!
     hostelOrRoomNo: String!
     branch: String!
-    phone:Int
+    phone:String
   }
 
   input LoginInput {
@@ -34,8 +34,8 @@ export const userTypeDefs = gql`
   input UpdateUserInput {
     username: String!
     email:String!
-    phone:Int
-    year: Int!
+    phone:String
+    year: String!
     hostelOrRoomNo: String!
     branch: String!
   }

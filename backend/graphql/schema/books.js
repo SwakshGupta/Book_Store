@@ -17,7 +17,7 @@ export const booksTypeDefs = gql`
 
   type AddBooks {
     _id: ID!
-    year: Int!
+    year: String!
     branch: String!
     books: [Book!]!
     notesIncluded: Boolean!
@@ -28,10 +28,10 @@ export const booksTypeDefs = gql`
     _id: ID!
     username: String!
     email: String!
-    year: Int
+    year: String
     hostelOrRoomNo: String
     branch: String
-    phone: Int
+    phone: String
     books: [AddBooks!]!
   }
 
@@ -42,12 +42,12 @@ export const booksTypeDefs = gql`
   }
 
   input AddBooksInput {
-    year: Int!
+    year: String
     branch: String!
     books: [BookInput!]!
     notesIncluded: Boolean!
     image: String
-    userId: ID # This userId we will extract from the token 
+    userId: ID 
   }
 
   type Query {

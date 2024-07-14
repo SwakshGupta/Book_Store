@@ -1,12 +1,10 @@
-// when the user clicks on a perticular  book this component will pops up
+//When a user select a perticular book detail of that book opens up along with the detail of the  user 
 
-// this page will have image,different type of books present in the set,price of book,userPhone number,userbhawan/Room number
+// in the book model itself there is a field user where i am  storing  the user id from that we can extract the user detail 
 
-// Here we will get the detailed information of book when the user clicks on a perticaular card
 
-// so we will pass the id if that book and then with the help of get books by id we will retrieve the information of that book
 
-// apart from that we will use the user model of that user to get the infromation regarding  the userPhone,Bhawan and room number
+
 
 import React from "react";
 import { useQuery } from "@apollo/client";
