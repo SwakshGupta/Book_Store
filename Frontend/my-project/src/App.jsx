@@ -11,6 +11,7 @@ import GetAllBooks from "./components/views/books";
 import UserBook from "./components/views/userBook";
 import UserProfile from "./components/profile/profile";
 import SignupForm from "./components/views/auth/signUp";
+import LoginForm from "./components/views/auth/login";
 
 function App() {
   return (
@@ -25,6 +26,8 @@ function App() {
               <Route path="/GetBooks" element={<GetAllBooks />} />
               <Route path="/Userbook/:id" element={<UserBook />} />
               <Route path="/SignUp" element={<SignupForm/>}/>
+              <Route path="/Login" element={<LoginForm/>}/>
+
             </Routes>
           </div>
         </Router>

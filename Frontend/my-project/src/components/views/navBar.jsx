@@ -1,20 +1,30 @@
 import React, { useState } from "react";
 import { FiFilter, FiUser, FiLogOut } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ onBranchSelect, onYearSelect }) => {
   const [showBranchFilter, setShowBranchFilter] = useState(false);
   const [selectedBranch, setSelectedBranch] = useState(null);
   const [showYearFilter, setShowYearFilter] = useState(false);
   const [selectedYear, setSelectedYear] = useState(null);
 
+  const navigate = useNavigate();
+
   const handleBranchSelect = (branch) => {
     setSelectedBranch(branch);
     setShowBranchFilter(false);
+    onBranchSelect(branch); // Notify parent component about selected branch
   };
 
   const handleYearSelect = (year) => {
     setSelectedYear(year);
     setShowYearFilter(false);
+    onYearSelect(year); // Notify parent component about selected year
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/Login");
   };
 
   return (
@@ -99,7 +109,10 @@ const Navbar = () => {
           </button>
 
           {/* Logout button */}
-          <button className="bg-white text-blue-600 p-2 rounded-md flex items-center space-x-2 hover:bg-blue-500 hover:text-white">
+          <button
+            className="bg-white text-blue-600 p-2 rounded-md flex items-center space-x-2 hover:bg-blue-500 hover:text-white"
+            onClick={handleLogout}
+          >
             <FiLogOut />
             <span className="hidden md:block">Logout</span>
           </button>
