@@ -8,8 +8,7 @@ import cloudinary from "../../config/cloudinary.js";
 export const booksResolvers = {
   Query: {
     getAllBooks: async () => {
-      console.log("Fetching all books...");
-
+      
       try {
         const books = await Books.find();
 
@@ -102,7 +101,8 @@ export const booksResolvers = {
 
       const newBooks = new Books({ // creating data inside teh book model 
         ...input,
-        image: bookUrl, // This will replace our base64 string with the cloudinary url
+        image: bookUrl,
+        userId: input.userId // This will replace our base64 string with the cloudinary url
        
       });
       await newBooks.save();

@@ -22,6 +22,7 @@ export const booksTypeDefs = gql`
     books: [Book!]!
     notesIncluded: Boolean!
     image: String
+    userId:ID!
   }
 
   type User {

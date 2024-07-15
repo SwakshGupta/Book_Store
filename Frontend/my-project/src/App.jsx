@@ -16,22 +16,21 @@ import LoginForm from "./components/views/auth/login";
 function App() {
   return (
     <>
-      <div className="h-full">
-        <Router>
-          <Navbar />
+      <Router>
+        <Navbar />
+        <div className="h-full">
           <div className="h-screen  overflow-y-auto">
             <Routes>
               <Route path="/Addbooks" element={<AddBooks />} />
               <Route path="/Profile" element={<UserProfile />} />
               <Route path="/GetBooks" element={<GetAllBooks />} />
               <Route path="/Userbook/:id" element={<UserBook />} />
-              <Route path="/SignUp" element={<SignupForm/>}/>
-              <Route path="/Login" element={<LoginForm/>}/>
-
+              <Route path="/SignUp" element={<SignupForm />} />
+              <Route path="/Login" element={<LoginForm />} />
             </Routes>
           </div>
-        </Router>
-      </div>
+        </div>
+      </Router>
     </>
   );
 }

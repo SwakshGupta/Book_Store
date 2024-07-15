@@ -12,7 +12,7 @@ const bookSchema = new mongoose.Schema({
   books: { type: [bookSchema], required: true },
   notesIncluded: { type: Boolean, required: true },
   image:{type:String,required:true},
-  owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' } // because we are doing mapping with the user so we have to have userId in the book schema
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' } // because we are doing mapping with the user so we have to have userId in the book schema
    
 });
 

@@ -38,9 +38,9 @@ const Navbar = ({ onBranchSelect, onYearSelect }) => {
   };
 
   return (
-    <nav className="bg-blue-600 p-4 shadow-lg w-full">
-      <div className="flex items-center justify-between">
-        <div className="text-white font-bold text-xl">BookStore</div>
+    <nav className="bg-blue-600 py-4 shadow-lg w-full pr-4">
+      <div className="flex items-center justify-between ">
+        <div className="text-white font-bold text-xl ml-4">BookStore</div>
         <div className="flex items-center space-x-2">
           {/* Filter Button */}
           <div className="relative">
